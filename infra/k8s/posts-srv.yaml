@@ -1,3 +1,4 @@
+# This srv file is created to create the nodeport for the posts service.
 apiVersion: v1
 kind: Service
 metadata:
