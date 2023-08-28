@@ -1,0 +1,35 @@
+ # This first half will create the pods based on the image.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  template:
+    metadata:
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: moderation
+          image: avishkaindula/moderation:latest
+          # We don't have to specify :latest either. It is the default tag.
+---
+# This second half will create the service for the pods.
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector:
+    app: moderation
+  # type: ClusterIP
+  # ClusterIP is the default type. So we don't have to specify it.
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 4003
+      targetPort: 4003
